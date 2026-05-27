@@ -87,9 +87,12 @@ const hierarchicalSegmentTypes = {
   },
 };
 
-// India total market base (USD Million) in 2021
-const indiaBaseValue = 92;
+// India total market base (USD Million) in 2021 — converted to INR Crore for output
+const indiaBaseValueUsdMillion = 92;
 const indiaGrowthRate = 0.168;
+const USD_MILLION_TO_INR_CRORE = 8.3;
+const VOLUME_UNITS_PER_USD_MILLION = 520;
+const UNITS_PER_MILLION_UNITS = 1_000_000;
 
 const segmentGrowthMultipliers = {
   'By Product Category': {
@@ -138,7 +141,6 @@ const segmentGrowthMultipliers = {
   },
 };
 
-const volumePerMillionUSD = 520;
 
 let seed = 42;
 function seededRandom() {
@@ -238,8 +240,9 @@ function buildAllSegmentTypes(baseValue, growthRate, roundFn) {
 function generateData(isVolume) {
   const data = {};
   const roundFn = isVolume ? roundToInt : roundTo1;
-  const multiplier = isVolume ? volumePerMillionUSD : 1;
-  const indiaBase = indiaBaseValue * multiplier;
+  const indiaBase = isVolume
+    ? indiaBaseValueUsdMillion * VOLUME_UNITS_PER_USD_MILLION * UNITS_PER_MILLION_UNITS
+    : indiaBaseValueUsdMillion * USD_MILLION_TO_INR_CRORE;
   const growth = indiaGrowthRate;
 
   // National India

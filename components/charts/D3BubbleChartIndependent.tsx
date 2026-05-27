@@ -1513,16 +1513,10 @@ export function D3BubbleChartIndependent({ title, height = 500 }: BubbleChartPro
     )
   }
 
-  const selectedCurrency = currency || data.metadata.currency || 'USD'
-  const isINR = selectedCurrency === 'INR'
-  const currencySymbol = isINR ? '₹' : '$'
-  const unitText = isINR ? '' : (data.metadata.value_unit || 'Million')
-  
-  const unit = filters.dataType === 'value'
-    ? isINR 
-      ? currencySymbol
-      : `${selectedCurrency} ${unitText}`
-    : data.metadata.volume_unit
+  const unit =
+    filters.dataType === 'value'
+      ? `${data.metadata.currency || 'INR'} ${data.metadata.value_unit || 'Crore'}`
+      : data.metadata.volume_unit || 'Units'
 
   return (
     <div className="w-full min-w-0 overflow-hidden" ref={containerRef}>

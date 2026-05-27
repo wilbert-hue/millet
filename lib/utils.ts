@@ -88,6 +88,25 @@ export function formatPercentage(value: number, decimals: number = 2): string {
   return `${value.toFixed(decimals)}%`
 }
 
+/** Y-axis / chart label for value data */
+export function getMarketValueAxisLabel(currency?: string, valueUnit?: string): string {
+  return `Market Value (${currency || 'INR'} ${valueUnit || 'Crore'})`
+}
+
+/** Y-axis / chart label for volume data */
+export function getMarketVolumeAxisLabel(volumeUnit?: string): string {
+  return `Market Volume (${volumeUnit || 'Units'})`
+}
+
+/** Tooltip suffix for numeric values */
+export function getMarketValueTooltipUnit(currency?: string, valueUnit?: string): string {
+  return `${currency || 'INR'} ${valueUnit || 'Crore'}`
+}
+
+export function getMarketVolumeTooltipUnit(volumeUnit?: string): string {
+  return volumeUnit || 'Units'
+}
+
 export function calculateGrowth(startValue: number, endValue: number): number {
   if (startValue === 0) return 0
   return ((endValue - startValue) / startValue) * 100

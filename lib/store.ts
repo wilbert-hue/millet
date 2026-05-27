@@ -181,7 +181,7 @@ export const useDashboardStore = create<DashboardStore>((set, get) => ({
   proposition3Data: null,
   competitiveIntelligenceData: null,
   dashboardName: null,
-  currency: 'USD',
+  currency: 'INR',
   
   setData: (data) => {
     const defaultFilters = getDefaultFilters(data)

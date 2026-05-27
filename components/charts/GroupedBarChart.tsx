@@ -12,6 +12,12 @@ import {
   ResponsiveContainer
 } from 'recharts'
 import { CHART_THEME, getChartColor, CHART_COLORS } from '@/lib/chart-theme'
+import {
+  getMarketValueAxisLabel,
+  getMarketVolumeAxisLabel,
+  getMarketValueTooltipUnit,
+  getMarketVolumeTooltipUnit,
+} from '@/lib/utils'
 import { filterData, prepareGroupedBarData, prepareIntelligentMultiLevelData, getUniqueGeographies, getUniqueSegments, getGeographyProportions } from '@/lib/data-processor'
 import { useDashboardStore } from '@/lib/store'
 import type { DataRecord } from '@/lib/types'
@@ -309,16 +315,10 @@ export function GroupedBarChart({ title, height = 400 }: GroupedBarChartProps) {
     )
   }
 
-  const selectedCurrency = currency || data.metadata.currency || 'USD'
-  const isINR = selectedCurrency === 'INR'
-  const currencySymbol = isINR ? '₹' : '$'
-  const unitLabel = isINR ? '' : (data.metadata.value_unit || 'Million')
-  
-  const yAxisLabel = filters.dataType === 'value'
-    ? isINR 
-      ? `Market Value (${currencySymbol})`
-      : `Market Value (${selectedCurrency} ${unitLabel})`
-    : `Market Volume (${data.metadata.volume_unit})`
+  const yAxisLabel =
+    filters.dataType === 'value'
+      ? getMarketValueAxisLabel(data.metadata.currency, data.metadata.value_unit)
+      : getMarketVolumeAxisLabel(data.metadata.volume_unit)
 
   // Matrix view should use heatmap instead
   if (filters.viewMode === 'matrix') {
@@ -342,16 +342,10 @@ export function GroupedBarChart({ title, height = 400 }: GroupedBarChartProps) {
     if (!active || !payload || !payload.length) return null
 
     const year = label
-    const selectedCurrency = currency || data.metadata.currency || 'USD'
-    const isINR = selectedCurrency === 'INR'
-    const currencySymbol = isINR ? '₹' : '$'
-    const unitText = isINR ? '' : (data.metadata.value_unit || 'Million')
-    
-    const unit = filters.dataType === 'value'
-      ? isINR 
-        ? currencySymbol
-        : `${selectedCurrency} ${unitText}`
-      : data.metadata.volume_unit
+    const unit =
+      filters.dataType === 'value'
+        ? getMarketValueTooltipUnit(data.metadata.currency, data.metadata.value_unit)
+        : getMarketVolumeTooltipUnit(data.metadata.volume_unit)
 
     if (chartData.isStacked) {
       // Use the hoveredBar state to determine which stack to show
