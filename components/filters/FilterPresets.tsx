@@ -39,29 +39,29 @@ export function FilterPresets() {
     return [
   {
     id: 'top-markets',
-    name: 'Top Markets',
-        description: 'Top 3 regions by 2023 market size',
+    name: 'Top Cities',
+        description: 'Top 3 cities by 2023 market size',
     icon: <Globe className="h-4 w-4" />,
         filters: topMarketFilters
   },
       {
         id: 'growth-leaders',
         name: 'Growth Leaders',
-        description: 'Top 2 regions with highest CAGR',
+        description: 'Top 2 cities with highest CAGR',
         icon: <TrendingUp className="h-4 w-4" />,
         filters: growthLeadersFilters
       },
       {
         id: 'emerging-markets',
-        name: 'Emerging Markets',
-        description: 'Top 5 countries with highest CAGR',
+        name: 'Fast-Growing Cities',
+        description: 'Top 5 cities with highest CAGR',
         icon: <Target className="h-4 w-4" />,
         filters: emergingMarketsFilters
       },
   {
     id: 'full-comparison',
     name: 'Full Comparison',
-    description: 'All regions and segments matrix view',
+    description: 'All cities and segments matrix view',
     icon: <BarChart3 className="h-4 w-4" />,
     filters: {
       viewMode: 'matrix',

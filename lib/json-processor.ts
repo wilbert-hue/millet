@@ -1283,7 +1283,7 @@ export async function processJsonDataAsync(
             return value && typeof value === 'object' && !Array.isArray(value)
           })
           regions.forEach(region => {
-            if (!regionGeographies.includes(region) && !geographies.includes(region)) {
+            if (!regionGeographies.includes(region)) {
               regionGeographies.push(region)
             }
             // Extract countries under each region (second level keys, excluding the region name itself)
@@ -1472,9 +1472,9 @@ export async function processJsonDataAsync(
     
     // Build metadata
     const metadata: Metadata = {
-      market_name: 'Normothermic Machine Perfusion Market',
+      market_name: 'Millet Based Snacks Market',
       market_type: 'Market Analysis',
-      industry: 'Healthcare & Pharmaceuticals',
+      industry: 'Food & Beverages',
       years: allYears,
       start_year: startYear,
       base_year: baseYear,

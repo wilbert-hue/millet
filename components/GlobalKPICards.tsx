@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react'
 import { useDashboardStore } from '@/lib/store'
-import { TrendingUp, DollarSign, Calendar, Activity } from 'lucide-react'
+import { TrendingUp, DollarSign, Calendar, Activity, Info } from 'lucide-react'
 import { formatIndianNumber, formatIndianNumberWithCommas, formatCurrencyValue } from '@/lib/utils'
 
 export function GlobalKPICards() {
@@ -14,10 +14,14 @@ export function GlobalKPICards() {
     // Use current filters to determine what to show
     // Get target geography from filters - use all selected geographies or use all geographies
     const allGeographies = data.dimensions.geographies.all_geographies || []
-    // If no geographies are selected, we'll use all geographies (empty array means no filter)
-    let selectedGeographies = filters.geographies.length > 0 
-      ? filters.geographies // Use all selected geographies
-      : [] // Empty array means we'll show data for all geographies
+    const defaultGeography =
+      data.dimensions.geographies.global?.find((g) => g !== 'Global') ||
+      data.dimensions.geographies.global?.[0] ||
+      'India'
+
+    // When nothing is selected, use the national market (India), not "Global"
+    let selectedGeographies =
+      filters.geographies.length > 0 ? filters.geographies : [defaultGeography]
     
     // Get segment type from filters (or use first segment type)
     const segmentTypes = Object.keys(data.dimensions.segments)
@@ -143,17 +147,16 @@ export function GlobalKPICards() {
 
     // Build descriptive labels
     // Note: selectedGeographies might be empty if we fell back to showing all geographies
-    const actualSelectedGeographies = filters.geographies.length > 0 ? filters.geographies : []
+    const actualSelectedGeographies =
+      filters.geographies.length > 0 ? filters.geographies : [defaultGeography]
     const dataTypeLabel = filters.dataType === 'value' ? 'Market Size' : 'Market Volume'
 
-    // Get market name from metadata, fallback to "Global Market"
-    const marketName = data.metadata.market_name || 'Global Market'
+    const marketName = data.metadata.market_name || 'Millet Based Snacks Market'
 
-    const geographyLabel = actualSelectedGeographies.length === 0
-      ? `Global ${marketName}`
-      : actualSelectedGeographies.length === 1
-      ? `${actualSelectedGeographies[0]} ${marketName}`
-      : `${actualSelectedGeographies.length} Geographies ${marketName}`
+    const geographyLabel =
+      actualSelectedGeographies.length === 1
+        ? `${actualSelectedGeographies[0]} ${marketName}`
+        : `${actualSelectedGeographies.length} Geographies ${marketName}`
     const segmentTypeLabel = targetSegmentType || 'All Segments'
 
     return {
@@ -273,6 +276,17 @@ export function GlobalKPICards() {
               </p>
             </div>
           </div>
+        </div>
+
+        <div
+          className="mt-3 flex items-start gap-2 rounded-md border border-amber-300 bg-amber-50 px-3 py-2"
+          role="alert"
+        >
+          <Info className="mt-0.5 h-4 w-4 shrink-0 text-amber-700" aria-hidden />
+          <p className="text-xs text-amber-900">
+            <span className="font-semibold">NOTE:</span> All the data in the dashboard is demo data.
+            No real world data is related to this.
+          </p>
         </div>
       </div>
     </div>

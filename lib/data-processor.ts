@@ -306,6 +306,20 @@ export function filterData(
       if (effectiveAggregationLevel === 2) {
         if (recordLevel === 2) {
           // Allow record at level 2 (aggregated parent OR leaf at level 2)
+        } else if (
+          recordLevel !== null &&
+          recordLevel !== undefined &&
+          recordLevel >= 3 &&
+          record.is_aggregated === false
+        ) {
+          // Include deeper leaf records so parents without their own totals
+          // (e.g. Commercial Consumers) can roll up from children in chart prep
+          const hierarchy = record.segment_hierarchy
+          const level1 = hierarchy?.level_1?.trim()
+          const level2 = hierarchy?.level_2?.trim()
+          if (!level1 || !level2 || level1 === level2 || record.segment === level1) {
+            return false
+          }
         } else {
           return false
         }
@@ -405,10 +419,18 @@ export function filterData(
             )
 
             if (parentIsSelected && !isExplicitlySelectedSegment) {
-              // Parent aggregated record is already included - exclude this leaf child
-              // BUT if this leaf IS the explicitly selected segment (flat segment with no children),
-              // include it because there's no separate aggregated parent record for flat segments
-              return false
+              // Exclude children only when an aggregated parent record exists for this geography.
+              // Parents without totals (e.g. Commercial Consumers) need their children included.
+              const parentHasAggregatedRecord = data.some(
+                (r) =>
+                  r.segment_type === record.segment_type &&
+                  r.geography === record.geography &&
+                  r.segment === hierarchy.level_1 &&
+                  r.is_aggregated === true
+              )
+              if (parentHasAggregatedRecord) {
+                return false
+              }
             }
 
             // For other cases, check if this leaf belongs to any selected segment

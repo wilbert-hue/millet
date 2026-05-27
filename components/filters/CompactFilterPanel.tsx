@@ -14,7 +14,7 @@ interface SelectedSegmentItem {
 export function CompactFilterPanel() {
   const { data, filters, updateFilters } = useDashboardStore()
   const [selectedSegmentType, setSelectedSegmentType] = useState<string>(
-    filters.segmentType || (data?.dimensions?.segments ? Object.keys(data.dimensions.segments)[0] : 'By Technology')
+    filters.segmentType || (data?.dimensions?.segments ? Object.keys(data.dimensions.segments)[0] : 'By Product Category')
   )
   const [selectedSegments, setSelectedSegments] = useState<SelectedSegmentItem[]>([])
   const [currentSegmentSelection, setCurrentSegmentSelection] = useState<string>('')
@@ -48,6 +48,11 @@ export function CompactFilterPanel() {
   }, [filters.businessType, selectedSegmentType, hasB2BSegmentation, selectedSegments.length])
 
   if (!data) return null
+
+  const geographyRegions =
+    data.dimensions.geographies.regions?.length > 0
+      ? data.dimensions.geographies.regions
+      : Object.keys(data.dimensions.geographies.countries || {})
 
   // Use business-type specific hierarchy if available, otherwise use main hierarchy
   let hierarchy = segmentDimension?.hierarchy || {}
@@ -279,7 +284,7 @@ export function CompactFilterPanel() {
           {data.dimensions.geographies.global && data.dimensions.geographies.global.length > 0 && (
             <option value={data.dimensions.geographies.global[0]}>{data.dimensions.geographies.global[0]}</option>
           )}
-          {data.dimensions.geographies.regions.map(region => (
+          {geographyRegions.map(region => (
             <optgroup key={region} label={region}>
               <option value={region}>{region}</option>
               {data.dimensions.geographies.countries[region]?.map(country => (

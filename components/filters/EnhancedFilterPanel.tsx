@@ -18,7 +18,7 @@ interface SelectedSegmentItem {
 export function EnhancedFilterPanel() {
   const { data, filters, updateFilters } = useDashboardStore()
   const [selectedSegmentType, setSelectedSegmentType] = useState<string>(
-    filters.segmentType || (data?.dimensions?.segments ? Object.keys(data.dimensions.segments)[0] : 'By Technology')
+    filters.segmentType || (data?.dimensions?.segments ? Object.keys(data.dimensions.segments)[0] : 'By Product Category')
   )
   const [selectedSegments, setSelectedSegments] = useState<SelectedSegmentItem[]>([])
   const [currentSegmentSelection, setCurrentSegmentSelection] = useState<string>('')
@@ -180,7 +180,7 @@ export function EnhancedFilterPanel() {
   }
   
   const hierarchicalOptions = getHierarchicalOptions()
-  
+
   // Add segment to selection
   const handleAddSegment = () => {
     if (!currentSegmentSelection) return
@@ -369,13 +369,14 @@ export function EnhancedFilterPanel() {
             onChange={(e) => {
               const newSegmentType = e.target.value
               setSelectedSegmentType(newSegmentType)
-              setCurrentSegmentSelection('') // Clear selection when type changes
-              setCascadePath([]) // Clear cascade path when type changes
-              // Update store - this will trigger save/restore of geography filters
-              updateFilters({ 
+              setCurrentSegmentSelection('')
+              setCascadePath([])
+              setSelectedSegments([])
+              updateFilters({
                 segmentType: newSegmentType,
-                segments: [] // Clear segments when type changes
-              })
+                segments: [],
+                advancedSegments: [],
+              } as any)
             }}
             className="w-full px-3 py-2 border border-gray-300 rounded-md text-black"
           >
@@ -427,7 +428,6 @@ export function EnhancedFilterPanel() {
                 selectedPath={cascadePath}
                 onSelectionChange={(path) => {
                   setCascadePath(path)
-                  // Update currentSegmentSelection to the last item in path for compatibility
                   if (path.length > 0) {
                     setCurrentSegmentSelection(path[path.length - 1])
                   } else {

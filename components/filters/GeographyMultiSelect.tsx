@@ -36,8 +36,12 @@ export function GeographyMultiSelect() {
 
     const geo = data.dimensions.geographies
     const globalItems = geo.global || []
-    const regions = geo.regions || []
     const countries = geo.countries || {}
+    // Use explicit regions, or parent keys from countries map (e.g. India → cities)
+    const regions =
+      (geo.regions && geo.regions.length > 0)
+        ? geo.regions
+        : Object.keys(countries)
     const hasHierarchy = regions.length > 0
     const flatOptions = geo.all_geographies || []
 

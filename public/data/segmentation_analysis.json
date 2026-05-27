@@ -1,62 +1,60 @@
 {
-  "Global": {
-    "By Type": {
-      "Sub-Normothermic Perfusion (20–34°C)": {},
-      "Warm or Normothermic Perfusion (35–37°C)": {}
+  "India": {
+    "By Product Category": {
+      "Millet Chips, Crisps & Nachos": {},
+      "Millet Extruded Snacks": {},
+      "Millet Namkeen, Sev & Savory Mixes": {},
+      "Millet Crackers & Savory Biscuits": {},
+      "Others (Millet Khakhra & Roasted Flat Snacks, Millet Cookies & Sweet Biscuits, etc.)": {}
     },
-    "By Organ Type": {
-      "Liver": {},
-      "Heart": {},
-      "Lung": {},
-      "Kidney": {},
-      "Others (Pancreas, Small bowel / Intestine, Composite Tissues / Limb Perfusion (emerging use cases))": {}
+    "By Millet Type": {
+      "Pearl Millet": {},
+      "Finger Millet": {},
+      "Sorghum": {},
+      "Foxtail Millet": {},
+      "Barnyard Millet": {},
+      "Little Millet": {},
+      "Kodo Millet": {},
+      "Others (Proso Millet, etc.)": {}
     },
-    "Application / Use Case": {
-      "Organ Preservation": {},
-      "Viability Assessment": {},
-      "Physiologic Transport": {},
-      "Reconditioning Marginal Organs": {},
-      "Others (Research Use / Protocol development)": {}
+    "By Price Range": {
+      "Economy (Up to ₹50 per 100 g)": {},
+      "Mid-Priced (₹51—₹100 per 100 g)": {},
+      "Premium (Above ₹100 per 100 g)": {}
     },
     "By End User": {
-      "Hospitals & Clinics": {},
-      "Specialty Clinic/Centers": {},
-      "Transplant Centers": {},
-      "Others (Research Institutes/Centers, Organ Procurement Organizations, etc.)": {}
+      "Individual Household Consumers": {},
+      "Commercial Consumers": {
+        "Corporate Offices & Workplaces": {},
+        "Schools, Colleges & Educational Institutions": {},
+        "HoReCa": {},
+        "Travel & Transit Operators": {},
+        "Healthcare & Wellness Institutions": {},
+        "Government & Institutional Nutrition Programs": {},
+        "Private Label Buyers": {},
+        "Export Buyers / Import Distributors": {}
+      }
+    },
+    "By Distribution Channel": {
+      "Online": {
+        "E-commerce Websites": {},
+        "Company-Owned Websites": {}
+      },
+      "Offline": {
+        "General Trade / Kirana Stores": {},
+        "Modern Trade / Supermarkets & Hypermarkets": {},
+        "Convenience Stores": {},
+        "Institutional / HoReCa Distributors": {}
+      }
     },
     "By Region": {
-      "North America": {
-        "U.S.": {},
-        "Canada": {}
-      },
-      "Europe": {
-        "U.K.": {},
-        "Germany": {},
-        "Italy": {},
-        "France": {},
-        "Spain": {},
-        "Russia": {},
-        "Rest of Europe": {}
-      },
-      "Asia Pacific": {
-        "China": {},
-        "India": {},
-        "Japan": {},
-        "South Korea": {},
-        "ASEAN": {},
-        "Australia": {},
-        "Rest of Asia Pacific": {}
-      },
-      "Latin America": {
-        "Brazil": {},
-        "Argentina": {},
-        "Mexico": {},
-        "Rest of Latin America": {}
-      },
-      "Middle East & Africa": {
-        "GCC": {},
-        "South Africa": {},
-        "Rest of Middle East & Africa": {}
+      "India": {
+        "Delhi NCR": {},
+        "Hyderabad": {},
+        "Bengaluru": {},
+        "Indore": {},
+        "Ludhiana": {},
+        "Rest of India": {}
       }
     }
   }
